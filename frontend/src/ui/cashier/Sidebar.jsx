@@ -39,7 +39,7 @@ const Sidebar = () =>{
                 </SidebarButton>
                 <SidebarButton
                     sx={{ ...pathname === '/cashier/account' && { color: '#FF8C00'}}}
-                    onClick={() => navigate('/cashier/acount')}
+                    onClick={() => navigate('/cashier/account')}
                 >
                     <SettingsIcon sx={{ width: 35, height: 35}}/> Account
                 </SidebarButton>
@@ -48,7 +48,7 @@ const Sidebar = () =>{
                 </SidebarButton>
             </div>
             <div className="items-center flex flex-col gap-3 border-1 border-gray-300 p-2">
-                <Avatar src={user?.image} sx={{ width: 45, height: 45}}/>
+                <Avatar src={`data:image/jpeg;base64,${user?.image}`} sx={{ width: 45, height: 45}}/>
                 <p className="font-bold text-[#3c3c3c] text-xl break-all">{user?.firstname} {user?.lastname}</p>
                 <p className="text-gray-500 break-all">{user?.role}</p>
             </div>

@@ -7,19 +7,32 @@ import { fetchData } from "../../../services/api"
 import { formatDateTime } from '../../../utils/date'
 import { formatCurrency } from "../../../utils/utils"
 import { Pagination } from "@mui/material"
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import dayjs from "dayjs"
+import { formatDate } from "../../../utils/date"
 
 const Sales = () => {
     const [page, setPage] = useState(1)
     const [sales, setSales] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [totalPages, setTotalPages] = useState(0);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const fetchSales = async () => {
-        const response = await fetchData(`/api/sale?page=${page}&limit=500&searchTerm=${searchTerm}`)
+        const response = await fetchData(`/api/sale?page=${page}&searchTerm=${searchTerm}&limit=500${startDate ? `&start_date=${formatDate(startDate)}` : ''}${endDate ? `&end_date=${formatDate(endDate)}` : ''}`)
         if(response.success) {
             setSales(response.sales)
             setTotalPages(response.totalPages)
         }
+    }
+
+    const handleChange = (value) => {
+        if(value[0]) setStartDate(value[0].$d)
+        if(value[1]) setEndDate(value[1].$d)
     }
 
     const generateCSV = () => {
@@ -50,7 +63,12 @@ const Sales = () => {
         }, 300)
       
         return () => clearTimeout(fetch)
-    }, [searchTerm, page])
+    }, [searchTerm, page, startDate, endDate])
+
+    const resetDate = () => {
+        setStartDate(null)
+        setEndDate(null)
+    }
 
     return <div className="flex flex-col flex-1 h-screen p-10">
         
@@ -62,6 +80,17 @@ const Sales = () => {
                 placeholder="Search"
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
+             <div className="flex gap-2 items-center">
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DateRangePicker']}>
+                        <DateRangePicker onChange={handleChange} value={[dayjs(startDate) || '', dayjs(endDate) || '']}/>
+                    </DemoContainer>
+                </LocalizationProvider>
+                <Button 
+                    onClick={resetDate}
+                    sx={{ color: 'red', height: '35px' }}
+                >Reset Date</Button>
+            </div>
             <Button 
                 onClick={generateCSV}
                 variant="contained"
@@ -71,8 +100,8 @@ const Sales = () => {
         <CustomizedTable
             cols={<TableRow sx={{ position: "sticky", top: 0, zIndex: 5}}>
                     <StyledTableCell align="center">Order number</StyledTableCell>
-                    <StyledTableCell align="left">Cashier</StyledTableCell>
-                    <StyledTableCell align="left">Date</StyledTableCell>
+                    <StyledTableCell align="center">Cashier</StyledTableCell>
+                    <StyledTableCell align="center">Date</StyledTableCell>
                     <StyledTableCell align="center">Subtotal</StyledTableCell>
                     <StyledTableCell align="center">Tax</StyledTableCell>
                     <StyledTableCell align="center">Total</StyledTableCell>
@@ -80,25 +109,26 @@ const Sales = () => {
 
             rows={sales.length > 0 && sales.map((sale, i) => <TableRow key={i}>
                     <StyledTableCell align="center">{sale.id}</StyledTableCell>
-                    <StyledTableCell align="left">
+                    <StyledTableCell align="center">
                         <div className="flex items-center gap-5">
                             <Avatar src={`data:image/jpeg;base64,${sale.cashier.image}`}/>
                             <p>{sale.cashier.firstname} {sale.cashier.lastname}</p>
                         </div>
                     </StyledTableCell>
-                    <StyledTableCell align="left">{formatDateTime(sale.date_time)}</StyledTableCell>
+                    <StyledTableCell align="center">{formatDateTime(sale.date_time)}</StyledTableCell>
                     <StyledTableCell align="center">{formatCurrency(sale.subtotal)}</StyledTableCell>
                     <StyledTableCell align="center">{formatCurrency(sale.tax)}</StyledTableCell>
                     <StyledTableCell align="center">{formatCurrency(sale.sales)}</StyledTableCell>
                 </TableRow>
                 )}
             />
-        <div className="mt-5 flex justify-end">
+        <div className="mt-10 flex justify-between">
             <Pagination 
                 count={totalPages} 
                 page={page} 
                 onChange={(e, value) => setPage(value)} 
             />
+            <h1 className="font-bold text-xl">Total: {formatCurrency(sales.reduce((total, sale) => sale.sales + total, 0))}</h1>
         </div>
     </div>
 }

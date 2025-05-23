@@ -46,3 +46,4 @@ D:\Projects\Cafe Management System\backend\CafeManagementAPI\obj\Debug\net9.0\re
 D:\Projects\Cafe Management System\backend\CafeManagementAPI\obj\Debug\net9.0\CafeManagementAPI.pdb
 D:\Projects\Cafe Management System\backend\CafeManagementAPI\obj\Debug\net9.0\CafeManagementAPI.genruntimeconfig.cache
 D:\Projects\Cafe Management System\backend\CafeManagementAPI\obj\Debug\net9.0\ref\CafeManagementAPI.dll
+D:\Projects\Cafe Management System\backend\CafeManagementAPI\obj\Debug\net9.0\CafeManagementAPI.sourcelink.json

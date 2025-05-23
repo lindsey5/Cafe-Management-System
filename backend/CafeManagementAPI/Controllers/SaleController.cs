@@ -32,7 +32,6 @@ namespace CafeManagementAPI.Controllers
 
             sale.Cashier_id = userId;
             _context.Sales.Add(sale);
-            Console.Write(sale.Sales);
             await _context.SaveChangesAsync();
 
             return Ok(new { success = true, sales = sale });
@@ -40,7 +39,12 @@ namespace CafeManagementAPI.Controllers
 
         [Authorize]
         [HttpGet()]
-        public async Task<IActionResult> GetSales(int page = 1, int limit = 50, string searchTerm = "")
+        public async Task<IActionResult> GetSales(
+            int page = 1,
+            int limit = 50,
+            string searchTerm = "",
+            DateTime? start_date = null,
+            DateTime? end_date = null)
         {
             var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -58,7 +62,7 @@ namespace CafeManagementAPI.Controllers
 
             string lowerSearch = searchTerm?.ToLower() ?? "";
 
-            var sales = await _context.Sales
+            var query = _context.Sales
                 .Include(s => s.Sales_items)
                 .Include(s => s.Cashier)
                 .Where(s => s.Cashier != null &&
@@ -67,14 +71,21 @@ namespace CafeManagementAPI.Controllers
                         string.IsNullOrEmpty(lowerSearch) ||
                         s.Cashier.Firstname.ToLower().Contains(lowerSearch) ||
                         s.Cashier.Lastname.ToLower().Contains(lowerSearch)
-                    ))
+                ));
+
+            if (start_date.HasValue)
+                query = query.Where(s => s.Date_time.Date >= start_date.Value);
+
+            if (end_date.HasValue)
+                query = query.Where(s => s.Date_time.Date <= end_date.Value);
+
+            var sales = await query
                 .OrderByDescending(s => s.Date_time)
                 .Skip((page - 1) * limit)
                 .Take(limit)
                 .ToListAsync();
 
-            var total = await _context.Sales.CountAsync();
-
+            var total = await query.CountAsync();
 
             return Ok(new
             {

@@ -53,8 +53,14 @@ const Login = () => {
             const response = await fetchData('/api/user')
 
             if(response.success){
-                if (response.user.role === 'Admin') setUser(response.user) 
-                else if(response.user.role === 'Cashier') setUser(response.user)    
+                console.log(response)
+                if (response.user.role === 'Admin') {
+                    setUser(response.user) 
+                    navigate('/admin', { replace: true })
+                }else if(response.user.role === 'Cashier') {
+                    setUser(response.user)  
+                    navigate('/cashier', { replace: true })
+                }  
             }else{
                 navigate('/', { replace: true })
             }

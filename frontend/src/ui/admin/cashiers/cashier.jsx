@@ -14,8 +14,8 @@ const Cashier = ({ open, handleClose, cashier, setCashier }) => {
         if(!cashier.username) setError('Username is required.')
         else if(!cashier.firstname) setError('Firstname is required.')
         else if(!cashier.lastname) setError('Lastname is required.')
-        else if(!cashier.password && !cashier.id) setError('Password is required.')
-        else if(cashier.password !== cashier.confirmPassword && !cashier.id) setError('Firstname is required.')
+        else if(!cashier.password && !cashier?.id) setError('Password is required.')
+        else if(cashier.password !== cashier.confirmPassword && !cashier?.id) setError('Password doesn\'t matched')
         else {
             if(confirm('Save cashier?')){
                 await cashier.id ? updateCashier() : addCashier()
@@ -54,24 +54,18 @@ const Cashier = ({ open, handleClose, cashier, setCashier }) => {
                 label="Lastname"
                 onChange={(e) => setCashier({...cashier, lastname: e.target.value})}
             />
-
-            {!cashier?.id && <>
-                <TextField 
-                    value={cashier?.password}
-                    label="Password"
-                    type="password"
-                    onChange={(e) => setCashier({...cashier, password: e.target.value})}
-                />
-                <TextField 
-                    value={cashier?.confirmPassword}
-                    label="Confirm Password"
-                    type="password"
-                    onChange={(e) => setCashier({...cashier, confirmPassword: e.target.value})}
-                />
-            </>}
-           {cashier?.id && <Button  sx={{ color: '#FF8C00'}}>
-                Change Password
-            </Button>}
+            <TextField 
+                value={cashier?.password}
+                label="Password"
+                type="password"
+                onChange={(e) => setCashier({...cashier, password: e.target.value})}
+            />
+            <TextField 
+                value={cashier?.confirmPassword}
+                label="Confirm Password"
+                type="password"
+                onChange={(e) => setCashier({...cashier, confirmPassword: e.target.value})}
+            />
             <Button 
                 onClick={handleSave}
                 sx={{ backgroundColor: '#FF8C00', color: 'white', borderRadius: 20}}

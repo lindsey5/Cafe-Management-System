@@ -2,6 +2,7 @@ using System.Security.Claims;
 using CafeManagementAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace CafeManagementAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
+        private readonly PasswordHasher<User> _passwordHasher = new PasswordHasher<User>();
 
         public UserController(ApplicationDBContext context)
         {
@@ -31,8 +33,6 @@ namespace CafeManagementAPI.Controllers
 
             if (user == null) return NotFound(new { success = false, message = "User not found." });
 
-            var base64Image = user.Image != null ? Convert.ToBase64String(user.Image) : null;
-
             return Ok(new
             {
                 success = true,
@@ -43,7 +43,7 @@ namespace CafeManagementAPI.Controllers
                     firstname = user.Firstname,
                     lastname = user.Lastname,
                     role = user.Role,
-                    image = $"data:image/jpeg;base64,{base64Image}"
+                    image = user.Image
                 }
             });
         }
@@ -121,6 +121,8 @@ namespace CafeManagementAPI.Controllers
             userToUpdate.Lastname = updatedUser.Lastname;
             userToUpdate.Image = updatedUser.Image;
 
+            if(!string.IsNullOrEmpty(updatedUser.Password)) userToUpdate.Password = _passwordHasher.HashPassword(userToUpdate, updatedUser.Password);
+            
             await _context.SaveChangesAsync();
 
             return Ok(new { success = true, message = "User successfully deleted" });

@@ -9,6 +9,7 @@ import CashierLayout from "./layouts/CashierLayout";
 import CashierDashboard from "./pages/user/cashier/dashboard";
 import Sales from "./pages/user/admin/sales";
 import CashierSales from './pages/user/cashier/sales'
+import Account from "./pages/user/Account";
 
 function App() {
   return <BrowserRouter>
@@ -19,11 +20,13 @@ function App() {
       <Route path="menu" element={<Menu />} />
       <Route path="sales" element={<Sales />} />
       <Route path="cashiers" element={<Cashiers />} />
+       <Route path="account" element={<Account />}/>
     </Route>
     <Route path="/cashier" element={<CashierLayout />}>
       <Route index element={<CashierDashboard />}/>
       <Route path="menu" element={<CashierMenu />} />
       <Route path="sales" element={<CashierSales />} />
+      <Route path="account" element={<Account />}/>
     </Route>
   </Routes>
   </BrowserRouter>
