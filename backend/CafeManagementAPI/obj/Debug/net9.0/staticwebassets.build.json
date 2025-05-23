@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "WeTNBlQdP7wAKP2A3jgW1X4ygvvRZHCKnxwLzlMANkw=",
+  "Source": "CafeManagementAPI",
+  "BasePath": "_content/CafeManagementAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

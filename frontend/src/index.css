@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .clip-polygon-custom {
+    clip-path: polygon(0 0, 100% 0, 70% 100%, 0% 100%);
+  }
+}
+
+@theme {
+  --font-cherry-bomb: "Cherry Bomb One", cursive;
+}
