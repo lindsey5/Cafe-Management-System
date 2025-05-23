@@ -104,7 +104,7 @@ const Account = () => {
         }
     }
 
-    return <div className="w-full flex flex-col p-10 gap-5">
+    return <div className="flex-1 flex flex-col p-10 gap-8 h-full overflow-y-auto">
             <h1 className="text-[#FF8C00] font-bold text-3xl">Account Settings</h1>
             <div className="flex gap-5 items-center">
                 <Avatar src={`${updatedData?.image}`} sx={{ width: 80, height: 80}}/>

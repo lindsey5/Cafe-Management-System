@@ -16,7 +16,7 @@ const Sidebar = () =>{
      const navigate = useNavigate();
      const { user } = useContext(UserContext)
 
-    return <aside className="w-[250px] flex flex-col h-full border-r-1 border-gray-300 py-10 px-5">
+    return <aside className="w-[250px] flex flex-col border-r-1 border-gray-300 py-10 px-5">
         <img className="w-full" src="/logo.png"/>
         <div className="flex-1 flex flex-col mt-10 justify-between">
             <div className="flex flex-col gap-2">
