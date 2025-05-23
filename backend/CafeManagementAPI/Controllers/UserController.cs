@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using CafeManagementAPI.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,8 +48,8 @@ namespace CafeManagementAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("cashier")]
-        public async Task<IActionResult> GetCashiers()
+        [HttpGet("users")]
+        public async Task<IActionResult> GetCashiers(string role = "Cashier")
         {
             var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -63,9 +62,9 @@ namespace CafeManagementAPI.Controllers
 
             if (user.Role != "Admin") return Unauthorized(new { success = false, message = "Restricted to admin only" });
 
-            var cashiers = await _context.Users.Where(u => u.Role == "Cashier" && u.Status == "Active").ToListAsync();
+            var users = await _context.Users.Where(u => u.Role == role && u.Status == "Active" && u.Id != userId).ToListAsync();
 
-            return Ok(new { success = true, cashiers });
+            return Ok(new { success = true, users });
         }
 
         [Authorize]

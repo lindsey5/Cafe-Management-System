@@ -4,12 +4,12 @@ import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/user/admin/dashboard";
 import Menu from "./pages/user/admin/menu";
 import CashierMenu from './pages/user/cashier/menu'
-import Cashiers from "./pages/user/admin/cashiers";
 import CashierLayout from "./layouts/CashierLayout";
 import CashierDashboard from "./pages/user/cashier/dashboard";
 import Sales from "./pages/user/admin/sales";
 import CashierSales from './pages/user/cashier/sales'
 import Account from "./pages/user/Account";
+import Users from "./pages/user/admin/users";
 
 function App() {
   return <BrowserRouter>
@@ -19,7 +19,7 @@ function App() {
       <Route index element={<Dashboard />} />
       <Route path="menu" element={<Menu />} />
       <Route path="sales" element={<Sales />} />
-      <Route path="cashiers" element={<Cashiers />} />
+      <Route path="cashiers" element={<Users />} />
        <Route path="account" element={<Account />}/>
     </Route>
     <Route path="/cashier" element={<CashierLayout />}>
