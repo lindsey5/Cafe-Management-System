@@ -72,7 +72,7 @@ const Sales = () => {
 
     return <div className="flex flex-col flex-1 h-screen p-10">
         
-        <div className="flex justify-between mb-8 gap-10">
+        <div className="flex justify-between mb-8 gap-10 items-center">
             <h1 className="text-[#FF8C00] font-bold text-4xl">Sales</h1>
             <input 
                 className="max-w-[500px] flex-1 rounded-2xl border-1 
@@ -110,7 +110,7 @@ const Sales = () => {
             rows={sales.length > 0 && sales.map((sale, i) => <TableRow key={i}>
                     <StyledTableCell align="center">{sale.id}</StyledTableCell>
                     <StyledTableCell align="center">
-                        <div className="flex items-center gap-5">
+                        <div className="flex items-center justify-center gap-5">
                             <Avatar src={`data:image/jpeg;base64,${sale.cashier.image}`}/>
                             <p>{sale.cashier.firstname} {sale.cashier.lastname}</p>
                         </div>
