@@ -19,7 +19,7 @@ function App() {
       <Route index element={<Dashboard />} />
       <Route path="menu" element={<Menu />} />
       <Route path="sales" element={<Sales />} />
-      <Route path="cashiers" element={<Users />} />
+      <Route path="users" element={<Users />} />
        <Route path="account" element={<Account />}/>
     </Route>
     <Route path="/cashier" element={<CashierLayout />}>

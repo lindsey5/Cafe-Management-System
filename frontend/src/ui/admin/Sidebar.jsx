@@ -39,10 +39,10 @@ const Sidebar = () =>{
                     <AttachMoneyRoundedIcon sx={{ width: 35, height: 35}}/> Sales
                 </SidebarButton>
                 <SidebarButton
-                    sx={{ ...pathname === '/admin/cashiers' && { color: '#FF8C00'}}}
-                    onClick={() => navigate('/admin/cashiers')}
+                    sx={{ ...pathname === '/admin/users' && { color: '#FF8C00'}}}
+                    onClick={() => navigate('/admin/users')}
                 >
-                    <PersonRoundedIcon sx={{ width: 35, height: 35}}/> Cashiers
+                    <PersonRoundedIcon sx={{ width: 35, height: 35}}/> Users
                 </SidebarButton>
                 <SidebarButton
                     sx={{ ...pathname === '/admin/account' && { color: '#FF8C00'}}}
