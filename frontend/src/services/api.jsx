@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from '../utils/auth'
 
-const API_URL = 'http://localhost:5009';
+const API_URL = 'https://sip-and-serve-api.onrender.com';
 
 export const fetchData = async (endpoint) => {
   try {
