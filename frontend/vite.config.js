@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  preview: {
+    host: true, 
+    port: process.env.PORT || 4173,
+    allowedHosts: ['sip-and-serve.onrender.com'] // add your Render domain here
+  }
 })
